@@ -268,6 +268,14 @@ uv lock --check
 
 聚焦多智能体研发协作、沙箱执行、检索增强与 Python 服务工程化。
 
+## 🤝 Contributors
+
+| 贡献者 | 角色 |
+| :--- | :--- |
+| 👨‍💻 [**Sterainding**](https://github.com/Sterainding) | 项目作者与维护者，负责设计、开发与最终决策 |
+| 🤖 [**OpenAI Codex**](https://github.com/openai/codex) | AI 辅助开发工具，参与工程检查、文档完善与发布协作 |
+| 🤖 [**Claude Code**](https://github.com/anthropics/claude-code) | AI 辅助开发工具 |
+
 <div align="center">
 
 **Forge the code. Keep the flow.**
