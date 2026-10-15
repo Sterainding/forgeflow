@@ -1,0 +1,54 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+*.pyc
+.env
+logs/
+
+# IDE
+.idea/
+.vscode/
+
+test_cp.txt
+loadtest/results*
+eval/baseline.json
+
+# macOS
+.DS_Store
+
+# 用户克隆进来的独立仓库（不提交进本项目）
+agent-communication-project/
+# Private credentials and local runtime artifacts
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.netrc
+credentials*.json
+secrets*.json
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.log
+*.db
+*.sqlite*
+artifacts/
+.local/
+
+# Historical delivery artifacts (kept locally, not published)
+docs/README_UPSTREAM.md
+docs/changes.patch
+docs/TESTING_20261013.md
+docs/CHANGELOG_20261013.md
+docs/images/ivyclaw-architecture.png

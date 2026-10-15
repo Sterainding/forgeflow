@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
+  <title id="title">ForgeFlow — From issue to implementation.</title>
+  <desc id="desc">Multi-agent development workflows. Plan, research, code, test, and review.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#071326"/><stop offset="1" stop-color="#100c25"/></linearGradient>
+    <linearGradient id="accent"><stop stop-color="#48d8ff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#91a7d0" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="1280" height="440" rx="24" fill="url(#bg)"/>
+  <rect width="1280" height="440" rx="24" fill="url(#grid)"/>
+  <circle cx="1160" cy="50" r="170" fill="#6554c0" opacity=".1"/>
+  <circle cx="1200" cy="380" r="130" fill="#48d8ff" opacity=".06"/>
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, monospace">
+    <text x="72" y="64" fill="#7dd3fc" font-size="14" letter-spacing="3">MULTI-AGENT DEVELOPMENT WORKFLOWS</text>
+    <path d="M78 106H124L104 139H142L88 196L98 153H68Z" fill="url(#accent)"/>
+    <text x="167" y="179" fill="#f4f7ff" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="80" letter-spacing="-3">ForgeFlow</text>
+    <text x="74" y="233" fill="#c9d5ef" font-size="23">From issue to implementation.</text>
+    <text x="74" y="274" fill="#8fa6ca" font-size="15">Sandbox execution / Code retrieval / Human review</text>
+    <path d="M124 342H1126" stroke="url(#accent)" stroke-width="2" opacity=".55"/>
+    <g fill="#0c1930" stroke="#466489">
+      <rect x="72" y="318" width="162" height="48" rx="12"/>
+      <rect x="270" y="318" width="198" height="48" rx="12"/>
+      <rect x="504" y="318" width="162" height="48" rx="12"/>
+      <rect x="702" y="318" width="162" height="48" rx="12"/>
+      <rect x="900" y="318" width="230" height="48" rx="12"/>
+    </g>
+    <g fill="#e3edff" font-size="16" text-anchor="middle">
+      <text x="153" y="348">PLAN</text><text x="369" y="348">RESEARCH</text>
+      <text x="585" y="348">CODE</text><text x="783" y="348">TEST</text><text x="1015" y="348">REVIEW</text>
+    </g>
+    <text x="74" y="411" fill="#7088ac" font-size="12" letter-spacing="2">BUILT BY STERAINDING</text>
+  </g>
+</svg>
