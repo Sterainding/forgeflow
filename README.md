@@ -78,6 +78,12 @@ flowchart TB
 
 主 Agent 中的角色协作由提示词约定和工具委派驱动；`agent/dispatcher.py` 另提供显式阶段调度入口。当前 HTTP API 使用 `agent_session`，尚未统一接入该阶段调度器。
 
+### 🔄 任务执行时序
+
+下图展示默认 Docker 配置下，从提交仓库研发任务、沙箱执行到人工审批后提交与推送的完整流程。
+
+![ForgeFlow 任务执行时序](docs/images/forgeflow-task-sequence.png)
+
 ### 🤖 角色分工
 
 | 角色 | 负责什么 |
