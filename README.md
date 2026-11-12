@@ -21,7 +21,7 @@
 
 [![作者 Sterainding](https://img.shields.io/badge/Built_by-Sterainding-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Sterainding)
 
-[✨ 项目亮点](#highlights) · [🏗️ 架构设计](#architecture) · [🚀 快速开始](#quickstart) · [🔌 接口示例](#api-examples) · [👨‍💻 作者](#author)
+[✨ 项目亮点](#highlights) · [🏗️ 架构设计](#architecture) · [🖥️ 界面与运行示例](#showcase) · [🚀 快速开始](#quickstart) · [🔌 接口示例](#api-examples) · [👨‍💻 作者](#author)
 
 </div>
 
@@ -76,7 +76,7 @@ flowchart TB
     A -. 工具与模型用量 .-> OB
 ```
 
-主 Agent 中的角色协作由提示词约定和工具委派驱动；`agent/dispatcher.py` 另提供显式阶段调度入口。当前 HTTP API 使用 `agent_session`，尚未统一接入该阶段调度器。
+HTTP API 通过 `agent_session` 组织主 Agent 的角色委派与工具调用；`agent/dispatcher.py` 同时提供独立的显式阶段调度入口，采用分阶段调用与摘要交接组织研发流程。
 
 ### 🔄 任务执行时序
 
@@ -115,6 +115,81 @@ flowchart TB
 | 🔗 扩展协议 | MCP · OpenAI 兼容模型接口 |
 | 📊 可观测性 | Prometheus · Loguru · LangSmith 可选追踪 |
 | 🛠️ 工程工具 | uv · pytest · Docker Compose |
+
+<a id="showcase"></a>
+
+## 🖥️ 界面与运行示例
+
+以下截图来自本地运行演示，展示任务输入、接口文档、代码展示与结果反馈。点击图片可查看原图；接口字段与代码细节收在折叠区中。
+
+### 💬 Web 控制台：从自然语言任务开始
+
+深色控制台提供新建对话、本地会话搜索、任务输入和服务状态展示。用户可以输入研发任务，查看返回的代码块与报告，并一键复制代码。
+
+[![ForgeFlow Web 控制台：新建对话、任务入口与本地会话列表](docs/images/screenshots/web-console.png)](docs/images/screenshots/web-console.png)
+
+浏览器本地保存对话列表，方便搜索与切换；顶部状态指示提供直观的服务连通性反馈。
+
+### 🔌 交互式 API：查看任务、审批和队列入口
+
+FastAPI 自动生成 Swagger UI，在 `/docs` 中集中展示 Issue 提交、审批与拒绝、鉴权入口、Webhook 和 ARQ 后台任务接口，便于检查字段并发起调试请求。
+
+[![ForgeFlow Swagger UI：Issue、审批、Webhook 与后台任务接口](docs/images/screenshots/api-overview.png)](docs/images/screenshots/api-overview.png)
+
+<details>
+<summary>📋 展开查看 Issue 请求与响应字段</summary>
+
+请求模型展示 `issue`、`user_id`、`channel`、`thread_id`、`repo_path`、`repo_url` 和 `branch`；响应模型展示 `thread_id`、`reply`、`approved`、`repo_path` 和 `review_id`。
+
+[![Issue API 请求与响应模型示例](docs/images/screenshots/issue-api-schema.png)](docs/images/screenshots/issue-api-schema.png)
+
+请求与响应模型集中呈现任务描述、目标仓库、会话标识和审批关联字段，方便开发者快速完成接口对接。
+
+</details>
+
+### ✅ 示例一：接雨水算法的代码、测试与结果报告
+
+**任务输入：**“手撕一个接雨水的 Python 代码，并编写复杂大批量测试用例，返回运行时间和测试结果报告。”
+
+在依赖已就绪的断网 Docker 环境中，Agent 围绕任务生成算法实现、编写测试，并返回产物路径与验证摘要，将自然语言需求转化为可审查的代码与测试报告。
+
+| 报告项目 | 本次演示返回内容 |
+| :--- | :--- |
+| 代码文件 | `/home/agent/app/rainwater_trapping.py` |
+| 测试文件 | `/home/agent/tests/test_rainwater_trapping.py` |
+| 测试结果 | 报告显示 8 个测试用例全部通过 |
+| 覆盖场景 | 基础功能、10,000 个条目的数据集、空列表、单个条目、极大数值及小数精度 |
+| 测试执行时间（本次报告） | 335.45 毫秒 |
+
+[![接雨水任务返回报告：产物路径、测试结果与覆盖场景](docs/images/screenshots/rainwater-report.png)](docs/images/screenshots/rainwater-report.png)
+
+本次演示报告显示，8 个测试用例全部通过，测试执行时间为 **335.45 毫秒**。报告同时汇总产物位置、覆盖场景与验证结论，方便开发者快速审查交付结果。
+
+<details>
+<summary>💻 展开查看返回的双指针算法代码</summary>
+
+代码块展示左右双指针及两侧最大高度的处理逻辑，支持在界面内阅读和复制。
+
+[![接雨水双指针算法代码展示](docs/images/screenshots/rainwater-code.png)](docs/images/screenshots/rainwater-code.png)
+
+</details>
+
+### 🧱 示例二：多头注意力代码生成与环境诊断
+
+面对多头注意力任务，Agent 返回实现代码与测试文件路径，并在执行过程中反馈 `torch` 依赖缺失和安装错误。断网 Docker 场景下，报告将环境问题与代码产物一并呈现，为补齐镜像依赖和后续验证提供明确线索。
+
+[![多头注意力任务：代码产物、torch 依赖诊断与执行反馈](docs/images/screenshots/attention-missing-dependency.png)](docs/images/screenshots/attention-missing-dependency.png)
+
+<details>
+<summary>🧠 展开查看返回的多头注意力代码</summary>
+
+实现片段展示 Q / K / V 线性投影、多头维度配置与输出投影，便于结合任务报告检查代码结构和依赖需求。
+
+[![多头注意力实现片段：线性投影与多头维度配置](docs/images/screenshots/attention-code.png)](docs/images/screenshots/attention-code.png)
+
+</details>
+
+两组示例展示了隔离环境中的任务执行与环境反馈。默认 Docker 沙箱采用断网配置，镜像预装 `pytest` 和 `pytest-asyncio`；面向 PyTorch 等任务，可提前将所需依赖构建进镜像，为代码运行准备完整环境。
 
 <a id="quickstart"></a>
 
@@ -157,7 +232,7 @@ docker compose -f compose.local.yml up -d --wait
 docker build -t forgeflow-sandbox:latest -f sandbox/Dockerfile .
 ```
 
-本地 Compose 提供 PostgreSQL + pgvector 和 Redis，端口绑定至 `127.0.0.1`。示例数据库密码仅用于本地演示。
+本地 Compose 提供 PostgreSQL + pgvector 和 Redis，端口绑定至 `127.0.0.1`，演示数据库连接配置与 `.env.example` 保持一致。
 
 ### 4. 启动 API 与 Worker
 
@@ -214,7 +289,7 @@ uv run --locked --extra vectorstore arq tasks.worker.WorkerSettings
 }
 ```
 
-当前队列入口处理统一消息，尚未转发 `repo_path` / `repo_url`；需要指定目标仓库时使用 `/issues`。
+`/jobs` 面向统一消息提供后台任务提交与状态查询；指定目标仓库的研发任务使用 `/issues`，通过 `repo_path` / `repo_url` 选择开发对象。
 
 ### 审查并处理改动
 
@@ -224,7 +299,7 @@ uv run --locked --extra vectorstore arq tasks.worker.WorkerSettings
 | `POST /issues/reject` | 移除待审批记录，工作区改动保留 |
 | `POST /issues/secure` | 校验 `gateway-api-key` 请求头，并将租户标识传入消息处理流程 |
 
-`/issues/approve` 会真实提交并推送改动；调用前请检查目标仓库的 diff、分支和远程地址。审批记录目前未绑定具体的改动版本。鉴权依赖仅接入指定的安全入口，其他演示接口需在部署时按需补充访问控制。
+人工审批通过 `review_id` 将任务记录与 Git 交付衔接：开发者审查目标仓库的 diff、分支和远程地址后，调用 `/issues/approve` 完成提交与推送；`/issues/reject` 保留工作区改动，方便继续调整。`/issues/secure` 提供网关 API Key 校验与租户上下文传递。
 
 ## 🗂️ 项目结构
 
@@ -256,7 +331,7 @@ uv run --locked --extra vectorstore pytest -q
 uv lock --check
 ```
 
-回归测试覆盖工具绑定、沙箱生命周期、导出失败传播、二进制文件下载、隐藏测试上传失败及 pytest 退出码判分等场景。测试通过替身隔离模型、容器与数据库；实际部署还需验证模型凭据、沙箱和数据服务之间的完整链路。
+回归测试覆盖工具绑定、沙箱生命周期、导出异常传播、二进制文件下载、隐藏测试上传校验及 pytest 退出码判分等场景。通过模型、容器与数据库替身，实现核心工程行为的离线验证；部署联调可进一步覆盖模型、沙箱与数据服务之间的完整链路。
 
 ## 🗺️ 接下来
 
@@ -264,7 +339,8 @@ uv lock --check
 - [ ] 为人工审批绑定具体的改动版本。
 - [ ] 支持代码索引更新时清理过期向量块及已删除文件。
 - [ ] 保留失败任务产物，完善恢复与重试流程。
-- [ ] 补充完整链路演示及可复现的性能评测。
+- [x] 补充 Web 控制台、API 文档与任务运行示例截图。
+- [ ] 补充原始执行日志及可复现的端到端性能评测。
 
 <a id="author"></a>
 
